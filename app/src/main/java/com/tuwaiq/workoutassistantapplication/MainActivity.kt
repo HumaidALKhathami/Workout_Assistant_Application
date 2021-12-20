@@ -1,52 +1,22 @@
 package com.tuwaiq.workoutassistantapplication
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
-import android.widget.EditText
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.hours
-import kotlin.time.Duration.Companion.minutes
-import kotlin.time.Duration.Companion.seconds
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
+import com.tuwaiq.workoutassistantapplication.composescreens.moduleandnav.Navigation
+import com.tuwaiq.workoutassistantapplication.ui.theme.WorkoutAssistantApplicationTheme
 
-private const val TAG = "MainActivity"
-class MainActivity : AppCompatActivity() {
-
-    private lateinit var editText: EditText
-
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        editText = findViewById(R.id.minutes)
-        var duration: Duration
-
-
-
-
-
-        editText.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // nothing here
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val inputDuration = s.toString()
-
-                duration = inputDuration.toString().toDouble().minutes
-
-                
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-                // nothing here
-            }
-
-        })
-
-
+        setContent {
+            Navigation()
+        }
     }
 }
+
