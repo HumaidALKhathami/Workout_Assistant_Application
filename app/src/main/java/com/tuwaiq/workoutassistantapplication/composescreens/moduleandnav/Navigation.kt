@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.tuwaiq.workoutassistantapplication.composescreens.MainScreen
+import com.tuwaiq.workoutassistantapplication.composescreens.screens.WorkoutListScreen
 import com.tuwaiq.workoutassistantapplication.composescreens.screens.SecondaryScreen
 
 @Composable
@@ -16,21 +16,20 @@ fun Navigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.MainScreen.route
+        startDestination = Screen.WorkoutListScreen.route
     ) {
-        composable(route = Screen.MainScreen.route){
-            MainScreen(navController = navController)
+        composable(route = Screen.WorkoutListScreen.route){
+            WorkoutListScreen(navController = navController)
         }
 
         composable(
-            route = Screen.SecondaryScreen.route +
-            //        "/{name}"
-            "?name={name}"
+            route = Screen.ExerciseListScreen.route +
+                    "/{name}"
+            //"?name={name}"
             ,
             arguments = listOf(
                 navArgument("name") {
                     type = NavType.StringType
-                    defaultValue = ""
                     nullable = true
                 }
             )
