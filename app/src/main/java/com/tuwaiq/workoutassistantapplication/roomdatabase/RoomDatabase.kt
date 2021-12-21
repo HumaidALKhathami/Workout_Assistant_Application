@@ -14,4 +14,8 @@ import com.tuwaiq.workoutassistantapplication.roomdatabase.models.Workouts
 abstract class RoomDatabase : RoomDatabase() {
 
     abstract fun RoomDao() : RoomDao
+
+    companion object{
+        const val DATABASE_NAME = "room_db"
+    }
 }
