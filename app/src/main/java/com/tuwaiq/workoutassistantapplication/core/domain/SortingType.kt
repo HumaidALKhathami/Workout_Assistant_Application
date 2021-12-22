@@ -1,4 +1,4 @@
-package com.tuwaiq.workoutassistantapplication.roomdatabase.utils
+package com.tuwaiq.workoutassistantapplication.core.domain
 
 sealed class SortingType{
     object Ascending: SortingType()

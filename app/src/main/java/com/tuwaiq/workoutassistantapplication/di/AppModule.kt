@@ -2,12 +2,10 @@ package com.tuwaiq.workoutassistantapplication.di
 
 import android.app.Application
 import androidx.room.Room
-import com.tuwaiq.workoutassistantapplication.roomdatabase.RoomDatabase
-import com.tuwaiq.workoutassistantapplication.roomdatabase.repo.Repository
-import com.tuwaiq.workoutassistantapplication.roomdatabase.repo.RepositoryImplementation
-import com.tuwaiq.workoutassistantapplication.roomdatabase.use_case.DeleteWorkoutUseCase
-import com.tuwaiq.workoutassistantapplication.roomdatabase.use_case.GetAllWorkoutsUseCase
-import com.tuwaiq.workoutassistantapplication.roomdatabase.use_case.WorkoutUseCases
+import com.tuwaiq.workoutassistantapplication.core.data.data_source.WorkoutExerciseProfileDatabase
+import com.tuwaiq.workoutassistantapplication.feature_workout.domain.repository.WorkoutRepository
+import com.tuwaiq.workoutassistantapplication.feature_workout.data.repository.WorkoutRepositoryImplementation
+import com.tuwaiq.workoutassistantapplication.feature_workout.domain.use_case.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,26 +18,28 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRoomDatabase(app : Application): RoomDatabase{
+    fun provideRoomDatabase(app : Application): WorkoutExerciseProfileDatabase {
         return Room.databaseBuilder(
             app ,
-            RoomDatabase::class.java,
-            RoomDatabase.DATABASE_NAME
+            WorkoutExerciseProfileDatabase::class.java,
+            WorkoutExerciseProfileDatabase.DATABASE_NAME
         ).build()
     }
 
     @Provides
     @Singleton
-    fun provideRepository(database: RoomDatabase): Repository{
-        return RepositoryImplementation(database.RoomDao())
+    fun provideRepository(database: WorkoutExerciseProfileDatabase): WorkoutRepository {
+        return WorkoutRepositoryImplementation(database.WorkoutExerciseDao())
     }
 
     @Provides
     @Singleton
-    fun providesWorkoutsUseCases(repository: Repository): WorkoutUseCases{
+    fun providesWorkoutsUseCases(repository: WorkoutRepository): WorkoutUseCases {
         return WorkoutUseCases(
             getAllWorkouts = GetAllWorkoutsUseCase(repository),
-            deleteWorkout = DeleteWorkoutUseCase(repository)
+            deleteWorkout = DeleteWorkoutUseCase(repository),
+            getWorkout = GetWorkoutUseCase(repository),
+            addWorkout = AddWorkoutUseCase(repository)
         )
     }
 }

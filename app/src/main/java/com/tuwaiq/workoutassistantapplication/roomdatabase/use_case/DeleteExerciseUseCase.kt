@@ -1,10 +1,10 @@
 package com.tuwaiq.workoutassistantapplication.roomdatabase.use_case
 
 import com.tuwaiq.workoutassistantapplication.roomdatabase.models.Exercise
-import com.tuwaiq.workoutassistantapplication.roomdatabase.repo.Repository
+import com.tuwaiq.workoutassistantapplication.feature_workout.domain.repository.WorkoutRepository
 
 class DeleteExerciseUseCase(
-    private val repository: Repository
+    private val repository: WorkoutRepository
 ) {
-    suspend operator fun invoke(exercise: Exercise) = repository.deleteExercise(exercise)
+    //suspend operator fun invoke(exercise: Exercise) = repository.deleteExercise(exercise)
 }

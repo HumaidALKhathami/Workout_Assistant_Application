@@ -1,4 +1,4 @@
-package com.tuwaiq.workoutassistantapplication.roomdatabase
+package com.tuwaiq.workoutassistantapplication.core.data.type_converters
 
 import androidx.room.TypeConverter
 import com.tuwaiq.workoutassistantapplication.roomdatabase.models.Exercise
