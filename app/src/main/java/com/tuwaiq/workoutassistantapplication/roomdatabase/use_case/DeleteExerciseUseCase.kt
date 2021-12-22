@@ -8,3 +8,4 @@ class DeleteExerciseUseCase(
 ) {
     //suspend operator fun invoke(exercise: Exercise) = repository.deleteExercise(exercise)
 }
+
