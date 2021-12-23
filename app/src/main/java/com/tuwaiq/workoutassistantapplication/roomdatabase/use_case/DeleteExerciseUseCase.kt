@@ -6,6 +6,6 @@ import com.tuwaiq.workoutassistantapplication.feature_workout.domain.repository.
 class DeleteExerciseUseCase(
     private val repository: WorkoutRepository
 ) {
-    //suspend operator fun invoke(exercise: Exercise) = repository.deleteExercise(exercise)
+  //  suspend operator fun invoke(exercise: Exercise) = repository.deleteExercise(exercise)
 }
 
