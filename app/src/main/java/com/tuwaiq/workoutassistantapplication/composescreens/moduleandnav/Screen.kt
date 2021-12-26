@@ -4,6 +4,7 @@ import kotlin.time.measureTime
 
 sealed class Screen(val route:String){
     object WorkoutListScreen: Screen("workout_list_screen")
+    object WorkoutScreen: Screen ("workout_screen")
     object ExerciseListScreen: Screen("exercise_list_screen")
 
     fun withArgs(vararg args : String):String{

@@ -1,5 +1,6 @@
 package com.tuwaiq.workoutassistantapplication.composescreens.moduleandnav
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -8,7 +9,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.tuwaiq.workoutassistantapplication.composescreens.screens.WorkoutListScreen
 import com.tuwaiq.workoutassistantapplication.composescreens.screens.SecondaryScreen
+import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.add_edit_workout.components.AddEditWorkoutScreen
 
+@ExperimentalAnimationApi
 @Composable
 fun Navigation() {
 
@@ -24,17 +27,17 @@ fun Navigation() {
 
         composable(
             route = Screen.ExerciseListScreen.route +
-                    "/{name}"
-            //"?name={name}"
+                    //"/{id}"
+            "?workoutId={workoutId}"
             ,
             arguments = listOf(
-                navArgument("name") {
-                    type = NavType.StringType
-                    nullable = true
+                navArgument("workoutId") {
+                    type = NavType.IntType
+                    defaultValue = -1
                 }
             )
         ){
-            SecondaryScreen(name = it.arguments?.getString("name")!!)
+            AddEditWorkoutScreen(navController = navController)
         }
     }
 
