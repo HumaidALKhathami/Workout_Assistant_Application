@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
 import androidx.navigation.NavController
-import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.workouts.WorkoutViewModel
+import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.workouts.WorkoutListViewModel
 import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.workouts.WorkoutsEvent
 import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.workouts.components.SortingSection
 import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.workouts.components.WorkoutItem
@@ -30,10 +30,10 @@ import kotlinx.coroutines.launch
 @Composable
 fun WorkoutListScreen(
         navController: NavController,
-        viewModel: WorkoutViewModel = hiltViewModel()
+        listViewModel: WorkoutListViewModel = hiltViewModel()
 ) {
 
-        val state = viewModel.workoutState.value
+        val state = listViewModel.workoutState.value
 
         val scope = rememberCoroutineScope()
 
@@ -59,7 +59,7 @@ fun WorkoutListScreen(
                        ) {
                                Text(text = "Your workouts")
                                IconButton(onClick = {
-                                       viewModel.onEvent(WorkoutsEvent.ToggleSortingSection)
+                                       listViewModel.onEvent(WorkoutsEvent.ToggleSortingSection)
                                }) {
                                        Icon(imageVector = Icons.Default.Sort, contentDescription = "Sorting" )
                                }
@@ -75,7 +75,7 @@ fun WorkoutListScreen(
                                                .padding(vertical = 16.dp),
                                        sortingBy = state.sortingBy,
                                        onSortingChange = {
-                                               viewModel.onEvent(WorkoutsEvent.Sorting(it))
+                                               listViewModel.onEvent(WorkoutsEvent.Sorting(it))
                                        }
                                )
                        }
@@ -93,14 +93,14 @@ fun WorkoutListScreen(
 
                                                        },
                                                onDeleteClick = {
-                                                       viewModel.onEvent(WorkoutsEvent.DeleteWorkout(workout))
+                                                       listViewModel.onEvent(WorkoutsEvent.DeleteWorkout(workout))
                                                        scope.launch {
                                                               val result = scaffoldState.snackbarHostState.showSnackbar(
                                                                        message = "Workout deleted",
                                                                        actionLabel = "undo"
                                                                )
                                                                if (result == SnackbarResult.ActionPerformed){
-                                                                       viewModel.onEvent(WorkoutsEvent.RestoreWorkout)
+                                                                       listViewModel.onEvent(WorkoutsEvent.RestoreWorkout)
                                                                }
                                                        }
                                                }

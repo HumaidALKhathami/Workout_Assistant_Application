@@ -48,7 +48,7 @@ fun SortingSection(
 
             SortingWorkoutsRadioButton(
                 text = "Descending",
-                selected = sortingBy is SortingBy.Date,
+                selected = sortingBy.sortingType is SortingType.Descending,
                 onSelected = {
                     onSortingChange(sortingBy.copy(SortingType.Descending))
                 }
