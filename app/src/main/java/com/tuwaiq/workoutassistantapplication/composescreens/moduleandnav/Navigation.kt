@@ -7,8 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.tuwaiq.workoutassistantapplication.composescreens.screens.WorkoutListScreen
-import com.tuwaiq.workoutassistantapplication.composescreens.screens.SecondaryScreen
+import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.workouts.WorkoutListScreen
 import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.add_edit_workout.components.AddEditWorkoutScreen
 
 @ExperimentalAnimationApi

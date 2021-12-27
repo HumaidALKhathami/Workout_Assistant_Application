@@ -1,4 +1,4 @@
-package com.tuwaiq.workoutassistantapplication.composescreens.screens
+package com.tuwaiq.workoutassistantapplication.feature_workout.presentation.workouts
 
 
 
@@ -15,10 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
 import androidx.navigation.NavController
+import com.tuwaiq.workoutassistantapplication.R
 import com.tuwaiq.workoutassistantapplication.composescreens.moduleandnav.Screen
 import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.workouts.WorkoutListViewModel
 import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.workouts.WorkoutsEvent
@@ -39,11 +42,18 @@ fun WorkoutListScreen(
         val scope = rememberCoroutineScope()
 
         val scaffoldState = rememberScaffoldState()
+
+        val context = LocalContext.current
         
         Scaffold(
                 floatingActionButton = {
                         FloatingActionButton(onClick = { navController.navigate(Screen.AddEditWorkoutScreen.route) }) {
-                                Icon(imageVector = Icons.Default.Add, contentDescription = "Add new workout")
+                                Icon(
+                                        imageVector = Icons.Default.Add,
+                                        contentDescription = stringResource(
+                                                R.string.new_workout_floating_button
+                                        )
+                                )
                         }
                 },
                 scaffoldState = scaffoldState
@@ -58,11 +68,16 @@ fun WorkoutListScreen(
                                horizontalArrangement = Arrangement.SpaceBetween,
                                verticalAlignment = Alignment.CenterVertically
                        ) {
-                               Text(text = "Your workouts")
+                               Text(text = stringResource(R.string.workout_list))
                                IconButton(onClick = {
                                        listViewModel.onEvent(WorkoutsEvent.ToggleSortingSection)
                                }) {
-                                       Icon(imageVector = Icons.Default.Sort, contentDescription = "Sorting" )
+                                       Icon(
+                                               imageVector = Icons.Default.Sort,
+                                               contentDescription = stringResource(
+                                                       R.string.sorting_button_description
+                                               )
+                                       )
                                }
                        }
                        AnimatedVisibility(
@@ -70,41 +85,49 @@ fun WorkoutListScreen(
                                enter = fadeIn() + slideInVertically(),
                                exit = fadeOut() + slideOutVertically()
                        ) {
-                               SortingSection(
-                                       modifier = Modifier
-                                               .fillMaxWidth()
-                                               .padding(vertical = 16.dp),
+                               SortingSection(modifier = Modifier
+                                       .fillMaxWidth()
+                                       .padding(vertical = 16.dp),
                                        sortingBy = state.sortingBy,
                                        onSortingChange = {
                                                listViewModel.onEvent(WorkoutsEvent.Sorting(it))
-                                       }
-                               )
+                                       })
                        }
+
                        Spacer(modifier = Modifier.height(16.dp))
                        
-                       LazyColumn(
-                               modifier = Modifier.fillMaxSize()
-                       ){
+                       LazyColumn(modifier = Modifier.fillMaxSize()){
                                items(state.workouts){ workout ->
                                        WorkoutItem(
                                                workout = workout,
                                                modifier = Modifier
                                                        .fillMaxWidth()
                                                        .clickable {
-                                                                  navController.navigate(
-                                                                          Screen.AddEditWorkoutScreen.route +
-                                                                                  "?workoutId=${workout.workoutID}"
-                                                                  )
+                                                               navController.navigate(
+                                                                       Screen.AddEditWorkoutScreen.route +
+                                                                               "?workoutId=${workout.workoutID}"
+                                                               )
                                                        },
                                                onDeleteClick = {
-                                                       listViewModel.onEvent(WorkoutsEvent.DeleteWorkout(workout))
-                                                       scope.launch {
-                                                              val result = scaffoldState.snackbarHostState.showSnackbar(
-                                                                       message = "Workout deleted",
-                                                                       actionLabel = "undo"
+                                                       listViewModel.onEvent(
+                                                               WorkoutsEvent.DeleteWorkout(
+                                                                       workout
                                                                )
-                                                               if (result == SnackbarResult.ActionPerformed){
-                                                                       listViewModel.onEvent(WorkoutsEvent.RestoreWorkout)
+                                                       )
+                                                       scope.launch {
+                                                               val result =
+                                                                       scaffoldState.snackbarHostState.showSnackbar(
+                                                                               message = context.getString(
+                                                                                       R.string.workout_deleted_snackbar
+                                                                               ),
+                                                                               actionLabel = context.getString(
+                                                                                       R.string.undo_action_label
+                                                                               )
+                                                                       )
+                                                               if (result == SnackbarResult.ActionPerformed) {
+                                                                       listViewModel.onEvent(
+                                                                               WorkoutsEvent.RestoreWorkout
+                                                                       )
                                                                }
                                                        }
                                                }

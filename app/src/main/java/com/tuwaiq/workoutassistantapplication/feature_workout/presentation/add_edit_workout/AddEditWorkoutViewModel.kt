@@ -1,8 +1,5 @@
 package com.tuwaiq.workoutassistantapplication.feature_workout.presentation.add_edit_workout
 
-
-
-
 import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log
@@ -19,7 +16,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import java.lang.NullPointerException
 import javax.inject.Inject
 
 private const val TAG = "AddEditWorkoutViewModel"
@@ -38,7 +34,6 @@ class AddEditWorkoutViewModel @Inject constructor(
                 viewModelScope.launch {
                     workoutUseCases.getWorkout(workoutId)?.also{ workout ->
 
-                        delay(1L)
                         Log.d(TAG, "workoutName: ${workout.workoutName}")
                         _workoutTitle.value = _workoutTitle.value.copy(
                                 text = workout.workoutName,
@@ -50,15 +45,8 @@ class AddEditWorkoutViewModel @Inject constructor(
         }
     }
 
-    val workoutId by lazy {
-        savedStateHandle.get<Int>("workoutId")
-    }
-
-
-
     @SuppressLint("StaticFieldLeak")
     private val context = getApplication<Application>().applicationContext
-
 
     private val _workoutTitle = mutableStateOf(WorkoutTextFieldState(
         hint = context.getString(R.string.workout_title_hint)

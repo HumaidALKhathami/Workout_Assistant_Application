@@ -11,8 +11,10 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.tuwaiq.workoutassistantapplication.R
 import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.add_edit_workout.AddEditWorkoutEvent
 import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.add_edit_workout.AddEditWorkoutViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -53,23 +55,23 @@ fun AddEditWorkoutScreen(
                 if (titleState.text.isEmpty()) {
                     val builder = AlertDialog.Builder(context)
 
-                    builder.setTitle("Empty title")
-                    builder.setMessage("are you sure you want to add a workout with an Empty title?")
+                    builder.setTitle(context.getString(R.string.empty_title_dialog))
+                    builder.setMessage(context.getString(R.string.empty_title_dialog_message))
 
-                    builder.setPositiveButton("add", DialogInterface.OnClickListener { _, _ ->
+                    builder.setPositiveButton(context.getString(R.string.empty_title_dialog_positive_button)) { _, _ ->
                         viewModel.onEvent(AddEditWorkoutEvent.SaveWorkout)
-                    })
+                    }
                     builder.setNegativeButton(
-                        "cancel",
-                        DialogInterface.OnClickListener { dialog, _ ->
-                            dialog.cancel()
-                        })
+                        context.getString(R.string.empty_title_dialog_negative_button)
+                    ) { dialog, _ ->
+                        dialog.cancel()
+                    }
                     val alert = builder.create()
                     alert.show()
                 }
             }
             ){
-                Icon(imageVector = Icons.Default.Save, contentDescription = "Save workout")
+                Icon(imageVector = Icons.Default.Save, contentDescription = stringResource(R.string.save_workout_floating_button))
             }
         },
         scaffoldState = scaffoldState
