@@ -10,7 +10,7 @@ class WorkoutRepositoryImplementation(
 ) : WorkoutRepository {
     override fun getAllWorkouts(): Flow<List<Workout>> = dao.getAllWorkouts()
 
-    override suspend fun getWorkout(id: Int): Workout = dao.getWorkout(id)
+    override suspend fun getWorkout(id: Int): Workout? = dao.getWorkout(id)
 
     override suspend fun addWorkout(workout: Workout) = dao.addWorkout(workout)
 

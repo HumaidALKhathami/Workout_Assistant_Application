@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Workout Assistant Application</string>
     <string name="title_activity_main2">MainActivity2</string>
+    <string name="sorting_by_title">Title</string>
+    <string name="sorting_by_date">Date</string>
+    <string name="sorting_typ_ascending">Ascending</string>
+    <string name="sorting_type_descending">Descending</string>
+    <string name="delete_workout">Delete workout</string>
+    <string name="edit_workout">Edit workout</string>
+    <string name="workout_title_hint">Enter a Workout Title</string>
 </resources>

@@ -26,7 +26,7 @@ fun Navigation() {
         }
 
         composable(
-            route = Screen.ExerciseListScreen.route +
+            route = Screen.AddEditWorkoutScreen.route +
                     //"/{id}"
             "?workoutId={workoutId}"
             ,

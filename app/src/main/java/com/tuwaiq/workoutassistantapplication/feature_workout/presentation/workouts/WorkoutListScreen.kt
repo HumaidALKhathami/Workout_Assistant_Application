@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
 import androidx.navigation.NavController
+import com.tuwaiq.workoutassistantapplication.composescreens.moduleandnav.Screen
 import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.workouts.WorkoutListViewModel
 import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.workouts.WorkoutsEvent
 import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.workouts.components.SortingSection
@@ -41,7 +42,7 @@ fun WorkoutListScreen(
         
         Scaffold(
                 floatingActionButton = {
-                        FloatingActionButton(onClick = {  }) {
+                        FloatingActionButton(onClick = { navController.navigate(Screen.AddEditWorkoutScreen.route) }) {
                                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add new workout")
                         }
                 },
@@ -90,7 +91,10 @@ fun WorkoutListScreen(
                                                modifier = Modifier
                                                        .fillMaxWidth()
                                                        .clickable {
-
+                                                                  navController.navigate(
+                                                                          Screen.AddEditWorkoutScreen.route +
+                                                                                  "?workoutId=${workout.workoutID}"
+                                                                  )
                                                        },
                                                onDeleteClick = {
                                                        listViewModel.onEvent(WorkoutsEvent.DeleteWorkout(workout))

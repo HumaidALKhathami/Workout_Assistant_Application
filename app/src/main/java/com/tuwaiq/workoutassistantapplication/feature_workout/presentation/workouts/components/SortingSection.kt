@@ -3,7 +3,9 @@ package com.tuwaiq.workoutassistantapplication.feature_workout.presentation.work
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.tuwaiq.workoutassistantapplication.R
 import com.tuwaiq.workoutassistantapplication.core.domain.SortingBy
 import com.tuwaiq.workoutassistantapplication.core.domain.SortingType
 
@@ -21,14 +23,14 @@ fun SortingSection(
             modifier = Modifier.fillMaxWidth()
         ) {
             SortingWorkoutsRadioButton(
-                text = "Title",
+                text = stringResource(R.string.sorting_by_title),
                 selected = sortingBy is SortingBy.Title,
                 onSelected = { onSortingChange(SortingBy.Title(sortingBy.sortingType)) }
             )
             Spacer(modifier = Modifier.width(8.dp))
 
             SortingWorkoutsRadioButton(
-                text = "Date",
+                text = stringResource(R.string.sorting_by_date),
                 selected = sortingBy is SortingBy.Date,
                 onSelected = { onSortingChange(SortingBy.Date(sortingBy.sortingType)) }
             )
@@ -38,7 +40,7 @@ fun SortingSection(
             modifier = Modifier.fillMaxWidth()
         ) {
             SortingWorkoutsRadioButton(
-                text = "Ascending",
+                text = stringResource(R.string.sorting_typ_ascending),
                 selected = sortingBy.sortingType is SortingType.Ascending,
                 onSelected = {
                     onSortingChange(sortingBy.copy(SortingType.Ascending))
@@ -47,7 +49,7 @@ fun SortingSection(
             Spacer(modifier = Modifier.width(8.dp))
 
             SortingWorkoutsRadioButton(
-                text = "Descending",
+                text = stringResource(R.string.sorting_type_descending),
                 selected = sortingBy.sortingType is SortingType.Descending,
                 onSelected = {
                     onSortingChange(sortingBy.copy(SortingType.Descending))

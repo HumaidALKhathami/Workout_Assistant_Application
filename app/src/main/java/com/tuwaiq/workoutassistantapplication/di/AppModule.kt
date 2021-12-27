@@ -1,6 +1,7 @@
 package com.tuwaiq.workoutassistantapplication.di
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.tuwaiq.workoutassistantapplication.core.data.data_source.WorkoutExerciseProfileDatabase
 import com.tuwaiq.workoutassistantapplication.feature_workout.domain.repository.WorkoutRepository

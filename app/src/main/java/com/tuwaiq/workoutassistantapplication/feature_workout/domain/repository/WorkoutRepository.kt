@@ -8,7 +8,7 @@ interface WorkoutRepository {
 
     fun getAllWorkouts(): Flow<List<Workout>>
 
-    suspend fun getWorkout(id : Int): Workout
+    suspend fun getWorkout(id : Int): Workout?
 
     suspend fun addWorkout(workout: Workout)
 

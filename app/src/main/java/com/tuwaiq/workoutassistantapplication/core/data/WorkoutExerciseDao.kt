@@ -16,7 +16,7 @@ interface WorkoutExerciseDao {
     fun getAllWorkouts():Flow<List<Workout>>
 
     @Query("SELECT * FROM workout WHERE workoutID = :id")
-    suspend fun getWorkout(id : Int): Workout
+    suspend fun getWorkout(id : Int): Workout?
 
     @Query("SELECT * FROM exercise WHERE exerciseID = :id")
     suspend fun getExercise(id:Int): Exercise

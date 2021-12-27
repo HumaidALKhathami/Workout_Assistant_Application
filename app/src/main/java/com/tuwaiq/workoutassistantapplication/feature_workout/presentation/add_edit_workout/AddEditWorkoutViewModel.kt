@@ -1,33 +1,48 @@
 package com.tuwaiq.workoutassistantapplication.feature_workout.presentation.add_edit_workout
 
+
+
+
+import android.annotation.SuppressLint
+import android.app.Application
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tuwaiq.workoutassistantapplication.R
 import com.tuwaiq.workoutassistantapplication.feature_workout.data.data_source.Workout
 import com.tuwaiq.workoutassistantapplication.feature_workout.domain.use_case.WorkoutUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import java.lang.NullPointerException
 import javax.inject.Inject
+
+private const val TAG = "AddEditWorkoutViewModel"
 
 @HiltViewModel
 class AddEditWorkoutViewModel @Inject constructor(
     private val workoutUseCases: WorkoutUseCases,
-    savedStateHandle: SavedStateHandle
-) : ViewModel() {
+    savedStateHandle: SavedStateHandle,
+    application: Application
+) : AndroidViewModel(application)  {
 
     init {
-        savedStateHandle.get<Int>("workoutID")?.let { workoutId ->
+
+        savedStateHandle.get<Int>("workoutId")?.let { workoutId ->
             if (workoutId != -1 ){
                 viewModelScope.launch {
-                    workoutUseCases.getWorkout(workoutId).also { workout ->
-                        currentWorkoutId = workout.workoutID
+                    workoutUseCases.getWorkout(workoutId)?.also{ workout ->
+
+                        delay(1L)
+                        Log.d(TAG, "workoutName: ${workout.workoutName}")
                         _workoutTitle.value = _workoutTitle.value.copy(
-                            text = workout.workoutName,
-                            isHintVisible = false
+                                text = workout.workoutName,
+                                isHintVisible = false
                         )
                     }
                 }
@@ -35,15 +50,23 @@ class AddEditWorkoutViewModel @Inject constructor(
         }
     }
 
+    val workoutId by lazy {
+        savedStateHandle.get<Int>("workoutId")
+    }
+
+
+
+    @SuppressLint("StaticFieldLeak")
+    private val context = getApplication<Application>().applicationContext
+
+
     private val _workoutTitle = mutableStateOf(WorkoutTextFieldState(
-        hint = "Enter a Workout Title"
+        hint = context.getString(R.string.workout_title_hint)
     ))
     val workoutTitle: State<WorkoutTextFieldState> = _workoutTitle
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
-
-    private var currentWorkoutId : Int = 0
 
     fun onEvent(event: AddEditWorkoutEvent){
         when (event){
@@ -62,7 +85,6 @@ class AddEditWorkoutViewModel @Inject constructor(
                 viewModelScope.launch{
                     workoutUseCases.addWorkout(
                         Workout(
-                            workoutID = currentWorkoutId,
                             workoutName = workoutTitle.value.text,
                             exercises = emptyList()
                         )

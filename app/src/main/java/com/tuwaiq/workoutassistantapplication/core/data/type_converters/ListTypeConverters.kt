@@ -10,19 +10,27 @@ class ListTypeConverters {
         @TypeConverter
         fun toListOfExercise(flatStringList: String): List<Exercise> {
 
-                val stringList = flatStringList.split("/")
+                if (!flatStringList.isEmpty()) {
+                        val stringList = flatStringList.split("/")
 
-                val exercisesList = mutableListOf<Exercise>()
-                stringList.forEach {
+                        val exercisesList = mutableListOf<Exercise>()
+                        stringList.forEach {
 
-                        val item =  it.split("=")
+                                val item = it.split("=")
 
-                        val exercise = Exercise(workoutName =  item[1].removeSuffix(", duration"), duration =  item[2].removeSuffix(")").toInt())
+                                val exercise = Exercise(
+                                        workoutName = item[1].removeSuffix(", duration"),
+                                        duration = item[2].removeSuffix(")").toInt()
+                                )
 
-                        exercisesList.add(exercise)
+                                exercisesList.add(exercise)
+                        }
+
+
+                        return exercisesList
+                }else{
+                        return emptyList()
                 }
-
-                return exercisesList
         }
 
 
