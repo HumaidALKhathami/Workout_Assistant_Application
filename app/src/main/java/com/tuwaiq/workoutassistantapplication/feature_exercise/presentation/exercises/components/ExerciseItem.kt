@@ -1,4 +1,4 @@
-package com.tuwaiq.workoutassistantapplication.feature_workout.presentation.workouts.components
+package com.tuwaiq.workoutassistantapplication.feature_exercise.presentation.exercises.components
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
@@ -18,22 +18,20 @@ import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.tuwaiq.workoutassistantapplication.R
-import com.tuwaiq.workoutassistantapplication.core.presentation.Screen
-import com.tuwaiq.workoutassistantapplication.feature_workout.data.data_source.Workout
+import com.tuwaiq.workoutassistantapplication.feature_exercise.data.data_source.Exercise
+
 
 @Composable
-fun WorkoutItem(
-    workout: Workout,
+fun ExerciseItem(
+    exercise: Exercise,
     modifier: Modifier = Modifier,
     cornerRadius: Dp = 10.dp,
-    onDeleteClick: () -> Unit,
-    navController: NavController
-    ) {
-    
+    onDeleteClick: () -> Unit
+) {
+
     Box(modifier = modifier){
-        
+
         Canvas(modifier = Modifier.matchParentSize()){
 
             val clipPath = Path().apply {
@@ -59,19 +57,16 @@ fun WorkoutItem(
                 .padding(16.dp)
                 .padding(end = 32.dp)
         ){
-            Text(text = workout.workoutName)
+            Text(text = exercise.exerciseName)
             Spacer(modifier = Modifier.height(8.dp))
-            
+            Text(text = exercise.duration.toString())
+            Spacer(modifier = Modifier.height(8.dp))
+
         }
         Row(modifier = Modifier.align(Alignment.BottomEnd)){
 
             IconButton(
-                onClick = {
-                    navController.navigate(
-                        Screen.AddEditWorkoutScreen.route +
-                                "?workoutId=${workout.workoutID}"
-                    )
-                }
+                onClick = {  }
 
             ) {
                 Icon(

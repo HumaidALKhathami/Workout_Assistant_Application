@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
-import com.tuwaiq.workoutassistantapplication.roomdatabase.models.Exercise
+import com.tuwaiq.workoutassistantapplication.feature_exercise.data.data_source.Exercise
 import com.tuwaiq.workoutassistantapplication.feature_workout.data.data_source.Workout
 import kotlinx.coroutines.flow.Flow
 
@@ -19,7 +19,7 @@ interface WorkoutExerciseDao {
     suspend fun getWorkout(id : Int): Workout?
 
     @Query("SELECT * FROM exercise WHERE exerciseID = :id")
-    suspend fun getExercise(id:Int): Exercise
+    suspend fun getExercise(id:Int): Exercise?
 
     @Insert(onConflict = REPLACE)
     suspend fun addWorkout(workout: Workout)

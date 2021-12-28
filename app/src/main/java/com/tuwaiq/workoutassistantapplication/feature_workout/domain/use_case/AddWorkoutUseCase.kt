@@ -7,11 +7,6 @@ class AddWorkoutUseCase(
     private val repository: WorkoutRepository
 ) {
     suspend operator fun invoke(workout : Workout){
-
-        if (workout.workoutName.isBlank()){
-
-        }
-
         repository.addWorkout(workout)
     }
 }

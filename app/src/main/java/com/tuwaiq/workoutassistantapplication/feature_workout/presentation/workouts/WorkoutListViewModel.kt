@@ -67,7 +67,7 @@ class WorkoutListViewModel @Inject constructor(
     private fun getAllWorkouts(sortingBy : SortingBy){
         getWorkoutsJob?.cancel()
 
-        getWorkoutsJob = workoutUseCases.getAllWorkouts(sortingBy )
+        getWorkoutsJob = workoutUseCases.getAllWorkouts(sortingBy)
             .onEach { workouts ->
                 _workoutState.value = workoutState.value.copy(
                     workouts = workouts,

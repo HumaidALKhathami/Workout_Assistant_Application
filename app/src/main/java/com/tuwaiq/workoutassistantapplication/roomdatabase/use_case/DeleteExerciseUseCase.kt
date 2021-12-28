@@ -1,6 +1,5 @@
 package com.tuwaiq.workoutassistantapplication.roomdatabase.use_case
 
-import com.tuwaiq.workoutassistantapplication.roomdatabase.models.Exercise
 import com.tuwaiq.workoutassistantapplication.feature_workout.domain.repository.WorkoutRepository
 
 class DeleteExerciseUseCase(

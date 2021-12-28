@@ -2,6 +2,8 @@ package com.tuwaiq.workoutassistantapplication.feature_workout.presentation.add_
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
@@ -60,6 +62,7 @@ fun AddEditWorkoutScreen(
 
                     builder.setPositiveButton(context.getString(R.string.empty_title_dialog_positive_button)) { _, _ ->
                         viewModel.onEvent(AddEditWorkoutEvent.SaveWorkout)
+                        navController.navigateUp()
                     }
                     builder.setNegativeButton(
                         context.getString(R.string.empty_title_dialog_negative_button)
@@ -68,6 +71,9 @@ fun AddEditWorkoutScreen(
                     }
                     val alert = builder.create()
                     alert.show()
+                }else {
+                    viewModel.onEvent(AddEditWorkoutEvent.SaveWorkout)
+                    navController.navigateUp()
                 }
             }
             ){

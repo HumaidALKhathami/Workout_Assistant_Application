@@ -1,4 +1,4 @@
-package com.tuwaiq.workoutassistantapplication.roomdatabase.models
+package com.tuwaiq.workoutassistantapplication.feature_exercise.data.data_source
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class Exercise(
     @PrimaryKey(autoGenerate = true)
-    val exerciseID: Int = 0 ,
-    var workoutName: String = "",
+    val exerciseID: Int = 0,
+    var exerciseName: String = "",
     var duration: Int = 0
         )

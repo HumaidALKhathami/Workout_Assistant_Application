@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
-import com.tuwaiq.workoutassistantapplication.composescreens.moduleandnav.Navigation
+import com.tuwaiq.workoutassistantapplication.core.presentation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

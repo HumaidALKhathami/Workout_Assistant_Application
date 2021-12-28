@@ -22,9 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 import androidx.navigation.NavController
 import com.tuwaiq.workoutassistantapplication.R
-import com.tuwaiq.workoutassistantapplication.composescreens.moduleandnav.Screen
-import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.workouts.WorkoutListViewModel
-import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.workouts.WorkoutsEvent
+import com.tuwaiq.workoutassistantapplication.core.presentation.Screen
 import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.workouts.components.SortingSection
 import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.workouts.components.WorkoutItem
 import kotlinx.coroutines.launch
@@ -50,9 +48,7 @@ fun WorkoutListScreen(
                         FloatingActionButton(onClick = { navController.navigate(Screen.AddEditWorkoutScreen.route) }) {
                                 Icon(
                                         imageVector = Icons.Default.Add,
-                                        contentDescription = stringResource(
-                                                R.string.new_workout_floating_button
-                                        )
+                                        contentDescription = stringResource(R.string.new_workout_floating_button)
                                 )
                         }
                 },
@@ -104,25 +100,19 @@ fun WorkoutListScreen(
                                                        .fillMaxWidth()
                                                        .clickable {
                                                                navController.navigate(
-                                                                       Screen.AddEditWorkoutScreen.route +
+                                                                       Screen.ExerciseListScreen.route +
                                                                                "?workoutId=${workout.workoutID}"
                                                                )
                                                        },
                                                onDeleteClick = {
                                                        listViewModel.onEvent(
-                                                               WorkoutsEvent.DeleteWorkout(
-                                                                       workout
-                                                               )
+                                                               WorkoutsEvent.DeleteWorkout(workout)
                                                        )
                                                        scope.launch {
                                                                val result =
                                                                        scaffoldState.snackbarHostState.showSnackbar(
-                                                                               message = context.getString(
-                                                                                       R.string.workout_deleted_snackbar
-                                                                               ),
-                                                                               actionLabel = context.getString(
-                                                                                       R.string.undo_action_label
-                                                                               )
+                                                                               message = context.getString(R.string.workout_deleted_snackbar),
+                                                                               actionLabel = context.getString(R.string.undo_action_label)
                                                                        )
                                                                if (result == SnackbarResult.ActionPerformed) {
                                                                        listViewModel.onEvent(
@@ -130,7 +120,8 @@ fun WorkoutListScreen(
                                                                        )
                                                                }
                                                        }
-                                               }
+                                               },
+                                               navController = navController
                                        )
                                        Spacer(modifier = Modifier.height(16.dp))
                                }

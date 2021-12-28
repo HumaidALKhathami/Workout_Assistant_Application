@@ -1,7 +1,7 @@
 package com.tuwaiq.workoutassistantapplication.core.data.type_converters
 
 import androidx.room.TypeConverter
-import com.tuwaiq.workoutassistantapplication.roomdatabase.models.Exercise
+import com.tuwaiq.workoutassistantapplication.feature_exercise.data.data_source.Exercise
 
 
 class ListTypeConverters {
@@ -19,7 +19,7 @@ class ListTypeConverters {
                                 val item = it.split("=")
 
                                 val exercise = Exercise(
-                                        workoutName = item[1].removeSuffix(", duration"),
+                                        exerciseName = item[1].removeSuffix(", duration"),
                                         duration = item[2].removeSuffix(")").toInt()
                                 )
 

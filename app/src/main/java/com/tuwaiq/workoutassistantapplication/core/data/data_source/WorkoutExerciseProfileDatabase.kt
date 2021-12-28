@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import com.tuwaiq.workoutassistantapplication.core.data.WorkoutExerciseDao
 import com.tuwaiq.workoutassistantapplication.core.data.type_converters.ListTypeConverters
 import com.tuwaiq.workoutassistantapplication.roomdatabase.models.PersonalProfile
-import com.tuwaiq.workoutassistantapplication.roomdatabase.models.Exercise
+import com.tuwaiq.workoutassistantapplication.feature_exercise.data.data_source.Exercise
 import com.tuwaiq.workoutassistantapplication.feature_workout.data.data_source.Workout
 
 
