@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val TAG = "AddEditWorkoutViewModel"
+
 
 @HiltViewModel
 class AddEditWorkoutViewModel @Inject constructor(
@@ -34,7 +34,7 @@ class AddEditWorkoutViewModel @Inject constructor(
                 viewModelScope.launch {
                     workoutUseCases.getWorkout(workoutId)?.also{ workout ->
 
-                        Log.d(TAG, "workoutName: ${workout.workoutName}")
+
                         _workoutTitle.value = _workoutTitle.value.copy(
                                 text = workout.workoutName,
                                 isHintVisible = false

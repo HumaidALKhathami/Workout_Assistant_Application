@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.tuwaiq.workoutassistantapplication.feature_exercise.presentation.add_edit_exercise.components.AddEditExerciseScreen
 import com.tuwaiq.workoutassistantapplication.feature_exercise.presentation.exercises.ExerciseListScreen
 import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.workouts.WorkoutListScreen
 import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.add_edit_workout.components.AddEditWorkoutScreen
@@ -51,6 +52,19 @@ fun Navigation() {
             )
         ){
             ExerciseListScreen(navController = navController)
+        }
+        
+        composable(
+            route = Screen.AddEditExerciseScreen.route + 
+                    "?exerciseId={exerciseId}",
+            arguments = listOf(
+                navArgument("exerciseId"){
+                    type = NavType.IntType
+                    defaultValue = -1 
+                }
+            )
+        ){
+            AddEditExerciseScreen(navController = navController)
         }
     }
 

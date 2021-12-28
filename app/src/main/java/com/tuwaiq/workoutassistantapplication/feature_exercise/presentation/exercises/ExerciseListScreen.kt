@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.tuwaiq.workoutassistantapplication.R
+import com.tuwaiq.workoutassistantapplication.core.presentation.Screen
 import com.tuwaiq.workoutassistantapplication.feature_exercise.presentation.exercises.components.ExerciseItem
 import kotlinx.coroutines.launch
 
@@ -35,7 +36,9 @@ fun ExerciseListScreen(
 
     Scaffold(
         floatingActionButton ={
-            FloatingActionButton(onClick = { /*TODO*/ }) {
+            FloatingActionButton(onClick = {
+                navController.navigate(Screen.AddEditExerciseScreen.route)
+            }) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = stringResource(R.string.new_exercise_floating_button)

@@ -50,8 +50,7 @@ fun AddEditWorkoutScreen(
     }
     
     Scaffold (
-        floatingActionButton =
-        {
+        floatingActionButton = {
             FloatingActionButton(onClick = {
 
                 if (titleState.text.isEmpty()) {
