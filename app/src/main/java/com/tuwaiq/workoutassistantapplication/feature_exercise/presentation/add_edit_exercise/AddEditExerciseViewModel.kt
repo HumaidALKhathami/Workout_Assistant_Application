@@ -2,6 +2,7 @@ package com.tuwaiq.workoutassistantapplication.feature_exercise.presentation.add
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
@@ -10,13 +11,14 @@ import androidx.lifecycle.viewModelScope
 import com.tuwaiq.workoutassistantapplication.R
 import com.tuwaiq.workoutassistantapplication.feature_exercise.data.data_source.Exercise
 import com.tuwaiq.workoutassistantapplication.feature_exercise.domain.use_case.ExerciseUseCases
+import com.tuwaiq.workoutassistantapplication.feature_workout.data.data_source.Workout
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
+private const val TAG = "AddEditExerciseViewMode"
 
 @HiltViewModel
 class AddEditExerciseViewModel @Inject constructor(
@@ -31,7 +33,7 @@ class AddEditExerciseViewModel @Inject constructor(
             if (exerciseId != -1){
                 viewModelScope.launch {
                     exerciseUseCases.getExercise(exerciseId)?.also { exercise ->
-
+                        workoutSample.exercises += exercise.exerciseID
                         _exerciseTitleState.value = _exerciseTitleState.value.copy(
                             text = exercise.exerciseName,
                             isHintVisible = false
@@ -40,6 +42,14 @@ class AddEditExerciseViewModel @Inject constructor(
                             text = exercise.duration.toString()
                         )
                     }
+                }
+            }
+        }
+
+        savedStateHandle.get<Int>("workoutId")?.let { workoutId ->
+            viewModelScope.launch {
+                exerciseUseCases.getWorkout(workoutId)?.also { workout ->
+                    workoutSample = workout
                 }
             }
         }
@@ -59,6 +69,8 @@ class AddEditExerciseViewModel @Inject constructor(
     
     val durationState : State<ExerciseTextFieldState> = _durationState
 
+    var workoutSample = Workout()
+
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
@@ -77,12 +89,17 @@ class AddEditExerciseViewModel @Inject constructor(
             }
             is AddEditExerciseEvent.SaveExercise -> {
                 viewModelScope.launch {
-                    exerciseUseCases.addExercise(
-                        Exercise(
-                            exerciseName = exerciseTitleState.value.text,
-                            duration = durationState.value.text.toInt()
-                        )
-                    )
+                    Exercise(
+                        exerciseName = exerciseTitleState.value.text,
+                        duration = durationState.value.text.toInt()
+                    ).also { exercise ->
+                        Log.d(TAG, "onEvent: exercise : $exercise")
+                        exerciseUseCases.addExercise(exercise)
+                        Log.d(TAG, "onEvent: workout: $workoutSample")
+                        exerciseUseCases.addWorkout(workoutSample)
+                    }
+
+
                     _eventFlow.emit(UiEvent.SaveExercise)
                 }
             }

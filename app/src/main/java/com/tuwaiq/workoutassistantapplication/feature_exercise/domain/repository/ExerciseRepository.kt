@@ -1,7 +1,9 @@
 package com.tuwaiq.workoutassistantapplication.feature_exercise.domain.repository
 
+import androidx.lifecycle.LiveData
 import com.tuwaiq.workoutassistantapplication.feature_exercise.data.data_source.Exercise
 import com.tuwaiq.workoutassistantapplication.feature_workout.data.data_source.Workout
+import kotlinx.coroutines.flow.Flow
 
 interface ExerciseRepository {
 
@@ -12,4 +14,6 @@ interface ExerciseRepository {
     suspend fun deleteExercise(exercise: Exercise)
 
     suspend fun getWorkout(id : Int): Workout?
+
+    suspend fun getWorkoutExercises(exercises: List<Int>): Flow<List<Exercise>>
 }

@@ -1,5 +1,6 @@
 package com.tuwaiq.workoutassistantapplication.core.data
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -32,5 +33,8 @@ interface WorkoutExerciseDao {
 
     @Delete
     suspend fun deleteExercise(exercise: Exercise)
+
+    @Query("SELECT * FROM exercise WHERE exerciseID IN (:exercises)")
+    suspend fun getWorkoutExercises(exercises: List<Int>): Flow<List<Exercise>>
 
 }

@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.tuwaiq.workoutassistantapplication.R
+import com.tuwaiq.workoutassistantapplication.core.presentation.Screen
 import com.tuwaiq.workoutassistantapplication.feature_exercise.presentation.add_edit_exercise.AddEditExerciseEvent
 import com.tuwaiq.workoutassistantapplication.feature_exercise.presentation.add_edit_exercise.AddEditExerciseViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -65,7 +66,7 @@ fun AddEditExerciseScreen(
 
                     builder.setPositiveButton(context.getString(R.string.empty_title_dialog_positive_button)) { _, _ ->
                         viewModel.onEvent(AddEditExerciseEvent.SaveExercise)
-                        navController.navigateUp()
+                        navController
                     }
                     builder.setNegativeButton(
                         context.getString(R.string.empty_title_dialog_negative_button)
@@ -76,7 +77,7 @@ fun AddEditExerciseScreen(
                     alert.show()
                 }else {
                     viewModel.onEvent(AddEditExerciseEvent.SaveExercise)
-                    navController.navigateUp()
+                    navController.navigate(Screen.ExerciseListScreen.route)
                 }
             }) {
                 Icon(imageVector = Icons.Default.Save, contentDescription = stringResource(R.string.save_exercise_floating_button))
@@ -84,7 +85,7 @@ fun AddEditExerciseScreen(
         }
     , scaffoldState = scaffoldState
     ) {
-        Row(
+        Column(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxSize()
@@ -97,7 +98,8 @@ fun AddEditExerciseScreen(
                 },
                 onFocusChange = {
                     viewModel.onEvent(AddEditExerciseEvent.ChangeTitleFocus(it))
-                }
+                },
+                isHintVisible = titleState.isHintVisible
             )
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -109,7 +111,8 @@ fun AddEditExerciseScreen(
                 },
                 onFocusChange = {
                     viewModel.onEvent(AddEditExerciseEvent.ChangeDurationFocus(it))
-                }
+                },
+                isHintVisible = durationState.isHintVisible
             )
         }
     }

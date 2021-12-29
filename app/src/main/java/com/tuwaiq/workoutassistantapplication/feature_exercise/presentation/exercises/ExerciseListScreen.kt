@@ -37,7 +37,7 @@ fun ExerciseListScreen(
     Scaffold(
         floatingActionButton ={
             FloatingActionButton(onClick = {
-                navController.navigate(Screen.AddEditExerciseScreen.route)
+                navController.navigate(Screen.AddEditExerciseScreen.route + "?workoutId=${listViewModel.workoutSample.workoutID}")
             }) {
                 Icon(
                     imageVector = Icons.Default.Add,

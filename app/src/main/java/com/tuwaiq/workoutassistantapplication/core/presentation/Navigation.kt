@@ -43,9 +43,13 @@ fun Navigation() {
 
         composable(
             route = Screen.ExerciseListScreen.route +
-        "?workoutId={workoutId}",
+        "?exerciseId={exerciseId}&workoutId={workoutId}",
             arguments = listOf(
                 navArgument("workoutId"){
+                    type = NavType.IntType
+                    defaultValue = -1
+                },
+                navArgument("exerciseId"){
                     type = NavType.IntType
                     defaultValue = -1
                 }
@@ -56,11 +60,15 @@ fun Navigation() {
         
         composable(
             route = Screen.AddEditExerciseScreen.route + 
-                    "?exerciseId={exerciseId}",
+                    "?exerciseId={exerciseId}&workoutId={workoutId}",
             arguments = listOf(
                 navArgument("exerciseId"){
                     type = NavType.IntType
                     defaultValue = -1 
+                },
+                navArgument("workoutId"){
+                    type = androidx.navigation.NavType.IntType
+                    defaultValue = -1
                 }
             )
         ){
