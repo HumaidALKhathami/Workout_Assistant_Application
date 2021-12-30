@@ -66,7 +66,7 @@ fun AddEditExerciseScreen(
 
                     builder.setPositiveButton(context.getString(R.string.empty_title_dialog_positive_button)) { _, _ ->
                         viewModel.onEvent(AddEditExerciseEvent.SaveExercise)
-                        navController
+                        navController.navigateUp()
                     }
                     builder.setNegativeButton(
                         context.getString(R.string.empty_title_dialog_negative_button)
@@ -77,7 +77,7 @@ fun AddEditExerciseScreen(
                     alert.show()
                 }else {
                     viewModel.onEvent(AddEditExerciseEvent.SaveExercise)
-                    navController.navigate(Screen.ExerciseListScreen.route)
+                    navController.navigateUp()
                 }
             }) {
                 Icon(imageVector = Icons.Default.Save, contentDescription = stringResource(R.string.save_exercise_floating_button))

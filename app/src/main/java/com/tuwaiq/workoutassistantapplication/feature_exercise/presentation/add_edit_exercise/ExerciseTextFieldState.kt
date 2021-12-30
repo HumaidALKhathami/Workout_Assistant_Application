@@ -3,5 +3,6 @@ package com.tuwaiq.workoutassistantapplication.feature_exercise.presentation.add
 data class ExerciseTextFieldState(
     val text: String ="",
     val hint: String ="",
-    val isHintVisible: Boolean = true
+    val isHintVisible: Boolean = true,
+    var workoutId: Int = 0
 )

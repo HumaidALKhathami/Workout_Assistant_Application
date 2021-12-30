@@ -11,6 +11,7 @@ import com.tuwaiq.workoutassistantapplication.feature_exercise.data.data_source.
 import com.tuwaiq.workoutassistantapplication.feature_exercise.domain.use_case.ExerciseUseCases
 import com.tuwaiq.workoutassistantapplication.feature_workout.data.data_source.Workout
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -59,7 +60,7 @@ class ExerciseListViewModel @Inject constructor(
         viewModelScope.launch{
             workoutSample = exerciseUseCases.getWorkout(id)!!
             Log.d(TAG, "getAllExercises: workoutSample $workoutSample")
-            exerciseUseCases.getWorkoutExercises(workoutSample.exercises).collectLatest {exercises ->
+            exerciseUseCases.getWorkoutExercises(workoutSample.workoutID).collect {exercises ->
                 viewModelScope.launch {
                     Log.d(TAG, "getAllExercises: exercise list $exercises")
                     _exerciseState.value = exerciseState.value.copy(

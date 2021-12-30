@@ -19,7 +19,7 @@ interface WorkoutExerciseDao {
     @Query("SELECT * FROM workout WHERE workoutID = :id")
     suspend fun getWorkout(id : Int): Workout?
 
-    @Query("SELECT * FROM exercise WHERE exerciseID = :id")
+    @Query("SELECT * FROM exercise WHERE exerciseId = :id")
     suspend fun getExercise(id:Int): Exercise?
 
     @Insert(onConflict = REPLACE)
@@ -34,7 +34,7 @@ interface WorkoutExerciseDao {
     @Delete
     suspend fun deleteExercise(exercise: Exercise)
 
-    @Query("SELECT * FROM exercise WHERE exerciseID IN (:exercises)")
-    suspend fun getWorkoutExercises(exercises: List<Int>): Flow<List<Exercise>>
+    @Query("SELECT * FROM exercise WHERE parentWorkoutId = :workoutId")
+    fun getWorkoutExercises(workoutId: Int): Flow<List<Exercise>>
 
 }

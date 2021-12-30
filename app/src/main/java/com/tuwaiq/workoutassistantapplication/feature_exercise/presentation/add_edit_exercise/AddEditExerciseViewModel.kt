@@ -33,7 +33,7 @@ class AddEditExerciseViewModel @Inject constructor(
             if (exerciseId != -1){
                 viewModelScope.launch {
                     exerciseUseCases.getExercise(exerciseId)?.also { exercise ->
-                        workoutSample.exercises += exercise.exerciseID
+                        workoutSample.exercises += exercise.exerciseId
                         _exerciseTitleState.value = _exerciseTitleState.value.copy(
                             text = exercise.exerciseName,
                             isHintVisible = false
@@ -71,6 +71,8 @@ class AddEditExerciseViewModel @Inject constructor(
 
     var workoutSample = Workout()
 
+    private var exerciseSample = Exercise()
+
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
@@ -89,9 +91,10 @@ class AddEditExerciseViewModel @Inject constructor(
             }
             is AddEditExerciseEvent.SaveExercise -> {
                 viewModelScope.launch {
-                    Exercise(
+                   exerciseSample = Exercise(
                         exerciseName = exerciseTitleState.value.text,
-                        duration = durationState.value.text.toInt()
+                        duration = durationState.value.text.toInt(),
+                       parentWorkoutId = workoutSample.workoutID
                     ).also { exercise ->
                         Log.d(TAG, "onEvent: exercise : $exercise")
                         exerciseUseCases.addExercise(exercise)
@@ -99,8 +102,9 @@ class AddEditExerciseViewModel @Inject constructor(
                         exerciseUseCases.addWorkout(workoutSample)
                     }
 
-
                     _eventFlow.emit(UiEvent.SaveExercise)
+                }.invokeOnCompletion {
+                    workoutSample.exercises += exerciseSample.exerciseId
                 }
             }
             is AddEditExerciseEvent.ChangeTitleFocus -> {
