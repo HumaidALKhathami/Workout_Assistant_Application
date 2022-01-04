@@ -85,7 +85,7 @@ fun AddEditWorkoutScreen(
             text = titleState.text,
             hint = titleState.hint,
             onTitleChange = {
-                            viewModel.onEvent(AddEditWorkoutEvent.EnteredTitle(it))
+                viewModel.onEvent(AddEditWorkoutEvent.EnteredTitle(it))
             },
             onFocusChange = {
                 viewModel.onEvent(AddEditWorkoutEvent.ChangeTitleFocus(it))

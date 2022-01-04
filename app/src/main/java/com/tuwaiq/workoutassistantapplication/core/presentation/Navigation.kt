@@ -67,7 +67,7 @@ fun Navigation() {
                     defaultValue = -1 
                 },
                 navArgument("workoutId"){
-                    type = androidx.navigation.NavType.IntType
+                    type = NavType.IntType
                     defaultValue = -1
                 }
             )

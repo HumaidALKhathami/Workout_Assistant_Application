@@ -13,6 +13,7 @@ import com.tuwaiq.workoutassistantapplication.feature_exercise.data.data_source.
 import com.tuwaiq.workoutassistantapplication.feature_exercise.domain.use_case.ExerciseUseCases
 import com.tuwaiq.workoutassistantapplication.feature_workout.data.data_source.Workout
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
@@ -32,14 +33,20 @@ class AddEditExerciseViewModel @Inject constructor(
         savedStateHandle.get<Int>("exerciseId")?.let { exerciseId ->
             if (exerciseId != -1){
                 viewModelScope.launch {
+                    Log.d(TAG, "exercise Id : $exerciseId")
+
                     exerciseUseCases.getExercise(exerciseId)?.also { exercise ->
+                        delay(1L)
+                        exerciseIdSample = exercise.exerciseId
+                        Log.d(TAG, "exerciseID: ${exercise.exerciseId}")
                         workoutSample.exercises += exercise.exerciseId
                         _exerciseTitleState.value = _exerciseTitleState.value.copy(
                             text = exercise.exerciseName,
                             isHintVisible = false
                         )
                         _durationState.value = _durationState.value.copy(
-                            text = exercise.duration.toString()
+                            text = exercise.duration.toString(),
+                            isHintVisible = false
                         )
                     }
                 }
@@ -70,6 +77,7 @@ class AddEditExerciseViewModel @Inject constructor(
     val durationState : State<ExerciseTextFieldState> = _durationState
 
     var workoutSample = Workout()
+    private var exerciseIdSample = -1
 
     private var exerciseSample = Exercise()
 
@@ -92,8 +100,9 @@ class AddEditExerciseViewModel @Inject constructor(
             is AddEditExerciseEvent.SaveExercise -> {
                 viewModelScope.launch {
                    exerciseSample = Exercise(
-                        exerciseName = exerciseTitleState.value.text,
-                        duration = durationState.value.text.toInt(),
+                       exerciseId = exerciseIdSample,
+                       exerciseName = exerciseTitleState.value.text,
+                       duration = durationState.value.text.toInt(),
                        parentWorkoutId = workoutSample.workoutID
                     ).also { exercise ->
                         Log.d(TAG, "onEvent: exercise : $exercise")

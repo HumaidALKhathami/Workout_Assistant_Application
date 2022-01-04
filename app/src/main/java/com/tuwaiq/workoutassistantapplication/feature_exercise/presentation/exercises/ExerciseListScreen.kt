@@ -47,34 +47,40 @@ fun ExerciseListScreen(
         },
         scaffoldState = scaffoldState
     ) {
-        Text(text = state.workoutName , modifier = Modifier.padding(16.dp))
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            Text(text = state.workoutName, modifier = Modifier.padding(16.dp))
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        LazyColumn(modifier = Modifier.fillMaxSize()){
-            items(state.exercises){ exercise ->
-                ExerciseItem(exercise = exercise ,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-
-                        },
-                    onDeleteClick = {
-                        listViewModel.onEvent(
-                            ExercisesEvent.DeleteExercise(exercise)
-                        )
-                        scope.launch {
-                            val result = scaffoldState.snackbarHostState.showSnackbar(
-                                message = "exercise deleted",
-                                actionLabel = context.getString(R.string.undo_action_label)
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(state.exercises) { exercise ->
+                    ExerciseItem(exercise = exercise,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                navController.navigate(Screen.AddEditExerciseScreen.route + "?exerciseId=${exercise.exerciseId}&workoutId=${listViewModel.workoutSample.workoutID}")
+                            },
+                        onDeleteClick = {
+                            listViewModel.onEvent(
+                                ExercisesEvent.DeleteExercise(exercise)
                             )
-                            if (result == SnackbarResult.ActionPerformed){
-                                listViewModel.onEvent(ExercisesEvent.RestoreExercise)
+                            scope.launch {
+                                val result = scaffoldState.snackbarHostState.showSnackbar(
+                                    message = "exercise deleted",
+                                    actionLabel = context.getString(R.string.undo_action_label)
+                                )
+                                if (result == SnackbarResult.ActionPerformed) {
+                                    listViewModel.onEvent(ExercisesEvent.RestoreExercise)
+                                }
                             }
                         }
-                    }
-                )
-                Spacer(modifier = Modifier.height(16.dp))
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
             }
         }
     }

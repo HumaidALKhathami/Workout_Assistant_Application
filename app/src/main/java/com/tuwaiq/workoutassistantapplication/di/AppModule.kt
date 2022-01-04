@@ -2,6 +2,7 @@ package com.tuwaiq.workoutassistantapplication.di
 
 import android.app.Application
 import androidx.room.Room
+import com.tuwaiq.workoutassistantapplication.core.data.MainRepository
 import com.tuwaiq.workoutassistantapplication.core.data.data_source.WorkoutExerciseProfileDatabase
 import com.tuwaiq.workoutassistantapplication.feature_exercise.data.repository.ExerciseRepositoryImplementation
 import com.tuwaiq.workoutassistantapplication.feature_exercise.domain.repository.ExerciseRepository
@@ -31,37 +32,47 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideWorkoutRepository(database: WorkoutExerciseProfileDatabase): WorkoutRepository {
-        return WorkoutRepositoryImplementation(database.WorkoutExerciseDao())
+    fun providesRepositories(database: WorkoutExerciseProfileDatabase): MainRepository{
+        return MainRepository(
+            workoutRepository = WorkoutRepositoryImplementation(database.WorkoutExerciseDao()),
+            exerciseRepository = ExerciseRepositoryImplementation(database.WorkoutExerciseDao())
+
+        )
     }
+
+//    @Provides
+//    @Singleton
+//    fun provideWorkoutRepository(database: WorkoutExerciseProfileDatabase): WorkoutRepository {
+//        return WorkoutRepositoryImplementation(database.WorkoutExerciseDao())
+//    }
+//
+//    @Provides
+//    @Singleton
+//    fun provideExerciseRepository(database: WorkoutExerciseProfileDatabase): ExerciseRepository {
+//        return ExerciseRepositoryImplementation(database.WorkoutExerciseDao())
+//    }
 
     @Provides
     @Singleton
-    fun provideExerciseRepository(database: WorkoutExerciseProfileDatabase): ExerciseRepository {
-        return ExerciseRepositoryImplementation(database.WorkoutExerciseDao())
-    }
-
-    @Provides
-    @Singleton
-    fun providesWorkoutsUseCases(repository: WorkoutRepository): WorkoutUseCases {
+    fun providesWorkoutsUseCases(repository: MainRepository): WorkoutUseCases {
         return WorkoutUseCases(
-            getAllWorkouts = GetAllWorkoutsUseCase(repository),
-            deleteWorkout = DeleteWorkoutUseCase(repository),
-            getWorkout = GetWorkoutUseCase(repository),
-            addWorkout = AddWorkoutUseCase(repository)
+            getAllWorkouts = GetAllWorkoutsUseCase(repository.workoutRepository),
+            deleteWorkout = DeleteWorkoutUseCase(repository.workoutRepository),
+            getWorkout = GetWorkoutUseCase(repository.workoutRepository),
+            addWorkout = AddWorkoutUseCase(repository.workoutRepository)
         )
     }
 
     @Provides
     @Singleton
-    fun providesExercisesUseCases(exerciseRepository: ExerciseRepository, workoutRepository: WorkoutRepository): ExerciseUseCases{
+    fun providesExercisesUseCases(repository: MainRepository): ExerciseUseCases{
         return ExerciseUseCases(
-            getExercise = GetExerciseUseCase(exerciseRepository),
-            deleteExercise = DeleteExerciseUseCase(exerciseRepository),
-            addExercise = AddExerciseUseCase(exerciseRepository),
-            getWorkout = GetWorkoutUseCase(workoutRepository),
-            addWorkout = AddWorkoutUseCase(workoutRepository),
-            getWorkoutExercises = GetWorkoutExercisesUseCase(exerciseRepository)
+            getExercise = GetExerciseUseCase(repository.exerciseRepository),
+            deleteExercise = DeleteExerciseUseCase(repository.exerciseRepository),
+            addExercise = AddExerciseUseCase(repository.exerciseRepository),
+            getWorkout = GetWorkoutUseCase(repository.workoutRepository),
+            addWorkout = AddWorkoutUseCase(repository.workoutRepository),
+            getWorkoutExercises = GetWorkoutExercisesUseCase(repository.exerciseRepository)
         )
     }
 }
