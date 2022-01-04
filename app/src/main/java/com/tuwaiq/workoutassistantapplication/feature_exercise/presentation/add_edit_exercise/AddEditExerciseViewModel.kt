@@ -25,8 +25,10 @@ private const val TAG = "AddEditExerciseViewMode"
 class AddEditExerciseViewModel @Inject constructor(
     private val exerciseUseCases: ExerciseUseCases,
     savedStateHandle: SavedStateHandle,
-    application: Application
-): AndroidViewModel(application) {
+    application: Application,
+    var exerciseSample: Exercise = Exercise(),
+    var workoutSample: Workout = Workout()
+    ): AndroidViewModel(application) {
 
     init {
 
@@ -76,10 +78,7 @@ class AddEditExerciseViewModel @Inject constructor(
     
     val durationState : State<ExerciseTextFieldState> = _durationState
 
-    var workoutSample = Workout()
     private var exerciseIdSample = -1
-
-    private var exerciseSample = Exercise()
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -100,7 +99,7 @@ class AddEditExerciseViewModel @Inject constructor(
             is AddEditExerciseEvent.SaveExercise -> {
                 viewModelScope.launch {
                    exerciseSample = Exercise(
-                       exerciseId = exerciseIdSample,
+                       exerciseId =  exerciseIdCheck(exerciseIdSample),
                        exerciseName = exerciseTitleState.value.text,
                        duration = durationState.value.text.toInt(),
                        parentWorkoutId = workoutSample.workoutID
@@ -130,6 +129,11 @@ class AddEditExerciseViewModel @Inject constructor(
             }
 
         }
+    }
+
+    private fun exerciseIdCheck(id:Int): Int{
+        return if (id != -1) id
+        else 0
     }
 
     sealed class UiEvent{

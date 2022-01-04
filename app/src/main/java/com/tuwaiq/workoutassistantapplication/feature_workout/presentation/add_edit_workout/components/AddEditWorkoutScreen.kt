@@ -42,7 +42,7 @@ fun AddEditWorkoutScreen(
                     )
                 }
                 is AddEditWorkoutViewModel.UiEvent.SaveWorkout -> {
-                    navController.navigateUp()
+                    navController.popBackStack()
 
                 }
             }
@@ -61,7 +61,6 @@ fun AddEditWorkoutScreen(
 
                     builder.setPositiveButton(context.getString(R.string.empty_title_dialog_positive_button)) { _, _ ->
                         viewModel.onEvent(AddEditWorkoutEvent.SaveWorkout)
-                        navController.navigateUp()
                     }
                     builder.setNegativeButton(
                         context.getString(R.string.empty_title_dialog_negative_button)
@@ -72,7 +71,6 @@ fun AddEditWorkoutScreen(
                     alert.show()
                 }else {
                     viewModel.onEvent(AddEditWorkoutEvent.SaveWorkout)
-                    navController.navigateUp()
                 }
             }
             ){

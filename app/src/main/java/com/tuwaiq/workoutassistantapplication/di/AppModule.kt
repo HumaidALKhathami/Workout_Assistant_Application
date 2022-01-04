@@ -4,9 +4,11 @@ import android.app.Application
 import androidx.room.Room
 import com.tuwaiq.workoutassistantapplication.core.data.MainRepository
 import com.tuwaiq.workoutassistantapplication.core.data.data_source.WorkoutExerciseProfileDatabase
+import com.tuwaiq.workoutassistantapplication.feature_exercise.data.data_source.Exercise
 import com.tuwaiq.workoutassistantapplication.feature_exercise.data.repository.ExerciseRepositoryImplementation
 import com.tuwaiq.workoutassistantapplication.feature_exercise.domain.repository.ExerciseRepository
 import com.tuwaiq.workoutassistantapplication.feature_exercise.domain.use_case.*
+import com.tuwaiq.workoutassistantapplication.feature_workout.data.data_source.Workout
 import com.tuwaiq.workoutassistantapplication.feature_workout.domain.repository.WorkoutRepository
 import com.tuwaiq.workoutassistantapplication.feature_workout.data.repository.WorkoutRepositoryImplementation
 import com.tuwaiq.workoutassistantapplication.feature_workout.domain.use_case.*
@@ -38,6 +40,18 @@ object AppModule {
             exerciseRepository = ExerciseRepositoryImplementation(database.WorkoutExerciseDao())
 
         )
+    }
+
+    @Provides
+    @Singleton
+    fun providesWorkoutObject():Workout{
+        return Workout()
+    }
+
+    @Provides
+    @Singleton
+    fun providesExerciseObject():Exercise{
+        return Exercise()
     }
 
 //    @Provides

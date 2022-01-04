@@ -1,6 +1,7 @@
 package com.tuwaiq.workoutassistantapplication.feature_exercise.presentation.add_edit_exercise.components
 
 
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.FloatingActionButton
@@ -22,6 +23,8 @@ import com.tuwaiq.workoutassistantapplication.core.presentation.Screen
 import com.tuwaiq.workoutassistantapplication.feature_exercise.presentation.add_edit_exercise.AddEditExerciseEvent
 import com.tuwaiq.workoutassistantapplication.feature_exercise.presentation.add_edit_exercise.AddEditExerciseViewModel
 import kotlinx.coroutines.flow.collectLatest
+
+private const val TAG = "AddEditExerciseScreen"
 
 @Composable
 fun AddEditExerciseScreen(
@@ -46,7 +49,7 @@ fun AddEditExerciseScreen(
                     )
                 }
                 is AddEditExerciseViewModel.UiEvent.SaveExercise -> {
-                    navController.navigateUp()
+                    navController.popBackStack()
                 }
             }
         }
@@ -66,7 +69,8 @@ fun AddEditExerciseScreen(
 
                     builder.setPositiveButton(context.getString(R.string.empty_title_dialog_positive_button)) { _, _ ->
                         viewModel.onEvent(AddEditExerciseEvent.SaveExercise)
-                        navController.navigateUp()
+                        Log.d(TAG, "AddEditExerciseScreen: ${viewModel.workoutSample}")
+                        Log.d(TAG, "AddEditExerciseScreen: ${viewModel.exerciseSample}")
                     }
                     builder.setNegativeButton(
                         context.getString(R.string.empty_title_dialog_negative_button)
@@ -77,7 +81,8 @@ fun AddEditExerciseScreen(
                     alert.show()
                 }else {
                     viewModel.onEvent(AddEditExerciseEvent.SaveExercise)
-                    navController.navigateUp()
+                    Log.d(TAG, "AddEditExerciseScreen: ${viewModel.workoutSample}")
+                    Log.d(TAG, "AddEditExerciseScreen: ${viewModel.exerciseSample}")
                 }
             }) {
                 Icon(imageVector = Icons.Default.Save, contentDescription = stringResource(R.string.save_exercise_floating_button))
