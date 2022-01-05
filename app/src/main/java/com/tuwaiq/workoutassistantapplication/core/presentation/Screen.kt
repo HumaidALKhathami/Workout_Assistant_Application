@@ -5,6 +5,7 @@ sealed class Screen(val route:String){
     object AddEditWorkoutScreen: Screen("workout_screen")
     object ExerciseListScreen: Screen("exercise_list_screen")
     object AddEditExerciseScreen: Screen("exercise_screen")
+    object PersonalProfileScreen:Screen("personal_profile")
 
 //    fun withArgs(vararg args : String):String{
 //        return buildString {

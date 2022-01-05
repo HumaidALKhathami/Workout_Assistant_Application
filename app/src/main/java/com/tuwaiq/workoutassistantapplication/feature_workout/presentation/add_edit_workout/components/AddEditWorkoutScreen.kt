@@ -43,7 +43,6 @@ fun AddEditWorkoutScreen(
                 }
                 is AddEditWorkoutViewModel.UiEvent.SaveWorkout -> {
                     navController.popBackStack()
-
                 }
             }
         }

@@ -17,14 +17,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WorkoutListViewModel @Inject constructor(
-    private val workoutUseCases: WorkoutUseCases
+    private val workoutUseCases: WorkoutUseCases,
+    private var lastDeletedWorkout: Workout? =null
 ):ViewModel() {
 
     private val _workoutState = mutableStateOf(WorkoutsState())
 
     val workoutState: State<WorkoutsState> = _workoutState
 
-    private var lastDeletedWorkout : Workout? = null
 
     private var getWorkoutsJob: Job? = null
 

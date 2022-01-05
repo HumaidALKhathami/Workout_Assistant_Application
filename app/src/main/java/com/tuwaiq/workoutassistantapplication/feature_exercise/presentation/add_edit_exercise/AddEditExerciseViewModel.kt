@@ -26,8 +26,8 @@ class AddEditExerciseViewModel @Inject constructor(
     private val exerciseUseCases: ExerciseUseCases,
     savedStateHandle: SavedStateHandle,
     application: Application,
-    var exerciseSample: Exercise = Exercise(),
-    var workoutSample: Workout = Workout()
+    var exerciseSample: Exercise ,
+    var workoutSample: Workout
     ): AndroidViewModel(application) {
 
     init {
@@ -69,6 +69,7 @@ class AddEditExerciseViewModel @Inject constructor(
     private val _exerciseTitleState = mutableStateOf(ExerciseTextFieldState(
         hint = context.getString(R.string.exercise_title_hint)
     ))
+
 
     val exerciseTitleState : State<ExerciseTextFieldState> = _exerciseTitleState
 

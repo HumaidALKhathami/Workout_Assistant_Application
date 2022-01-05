@@ -1,7 +1,10 @@
 package com.tuwaiq.workoutassistantapplication.core.presentation
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,9 +17,9 @@ import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.add_e
 
 @ExperimentalAnimationApi
 @Composable
-fun Navigation() {
+fun Navigation(navController: NavHostController) {
 
-    val navController = rememberNavController()
+
 
     NavHost(
         navController = navController,
@@ -74,6 +77,12 @@ fun Navigation() {
         ){
             AddEditExerciseScreen(navController = navController)
         }
+        
+        composable(Screen.PersonalProfileScreen.route){
+            Text(text = "Hello from personal profile")
+        }
     }
+    
+    
 
 }

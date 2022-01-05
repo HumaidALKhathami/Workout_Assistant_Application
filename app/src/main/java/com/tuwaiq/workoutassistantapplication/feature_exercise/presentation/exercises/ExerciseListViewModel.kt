@@ -21,21 +21,19 @@ private const val TAG = "ExerciseListViewModel"
 @HiltViewModel
 class ExerciseListViewModel @Inject constructor(
     private val exerciseUseCases: ExerciseUseCases,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    private var lastDeletedExercise: Exercise? = null ,
+    var workoutSample: Workout
 ) : ViewModel() {
 
     private val _exerciseState = mutableStateOf(ExercisesState())
     val exerciseState: State<ExercisesState> = _exerciseState
-
-    private var lastDeletedExercise: Exercise? = null
 
     init {
         savedStateHandle.get<Int>("workoutId")?.let { workoutId ->
             getAllExercises(workoutId)
         }
     }
-
-    var workoutSample = Workout()
 
     fun onEvent(event: ExercisesEvent){
         when(event){
