@@ -70,7 +70,7 @@ fun ExerciseListScreen(
                             )
                             scope.launch {
                                 val result = scaffoldState.snackbarHostState.showSnackbar(
-                                    message = "exercise deleted",
+                                    message = context.getString(R.string.exercise_delelted_snackbar),
                                     actionLabel = context.getString(R.string.undo_action_label)
                                 )
                                 if (result == SnackbarResult.ActionPerformed) {

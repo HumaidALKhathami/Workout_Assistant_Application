@@ -15,13 +15,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
 import androidx.navigation.NavController
+import com.tuwaiq.workoutassistantapplication.MainScreen
 import com.tuwaiq.workoutassistantapplication.R
+import com.tuwaiq.workoutassistantapplication.core.presentation.NavigationBottomBar
 import com.tuwaiq.workoutassistantapplication.core.presentation.Screen
 import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.workouts.components.SortingSection
 import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.workouts.components.WorkoutItem
@@ -52,7 +55,8 @@ fun WorkoutListScreen(
                                 )
                         }
                 },
-                scaffoldState = scaffoldState
+                scaffoldState = scaffoldState,
+                bottomBar = { NavigationBottomBar(emptyList(),navController, onItemClick = {}) }
         ) {
                Column(
                        modifier = Modifier

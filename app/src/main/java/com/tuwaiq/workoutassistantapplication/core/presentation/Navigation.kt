@@ -1,6 +1,7 @@
 package com.tuwaiq.workoutassistantapplication.core.presentation
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
@@ -17,7 +18,9 @@ import com.tuwaiq.workoutassistantapplication.feature_workout.presentation.add_e
 
 @ExperimentalAnimationApi
 @Composable
-fun Navigation(navController: NavHostController) {
+fun Navigation(
+    navController: NavHostController
+) {
 
 
 

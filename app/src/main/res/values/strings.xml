@@ -24,4 +24,5 @@
     <string name="empty_exercise_alert_message">are you sure you want to add an exercise with empty title?</string>
     <string name="save_exercise_floating_button">save exercise</string>
     <string name="bottom_navigation_workout_name">Workouts</string>
+    <string name="exercise_delelted_snackbar">exercise deleted</string>
 </resources>

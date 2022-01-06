@@ -1,6 +1,5 @@
 package com.tuwaiq.workoutassistantapplication.feature_exercise.presentation.exercises
 
-import android.app.Activity
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -12,7 +11,6 @@ import com.tuwaiq.workoutassistantapplication.feature_exercise.domain.use_case.E
 import com.tuwaiq.workoutassistantapplication.feature_workout.data.data_source.Workout
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -59,14 +57,14 @@ class ExerciseListViewModel @Inject constructor(
             workoutSample = exerciseUseCases.getWorkout(id)!!
             Log.d(TAG, "getAllExercises: workoutSample $workoutSample")
             exerciseUseCases.getWorkoutExercises(workoutSample.workoutID).collect {exercises ->
-                viewModelScope.launch {
+//                viewModelScope.launch {
                     Log.d(TAG, "getAllExercises: exercise list $exercises")
                     _exerciseState.value = exerciseState.value.copy(
 
                         exerciseUseCases.getWorkout(id)!!.workoutName,
                         exercises
                     )
-                }
+//                }
             }
         }
     }
